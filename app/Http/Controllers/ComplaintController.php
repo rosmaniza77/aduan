@@ -53,7 +53,10 @@ class ComplaintController extends Controller
     {
         //$var='hi';
         //dd('stop hera',$var);
-        return view('complaint.edit');
+        //return view('complaint.edit', compact('complaint'));
+        return view('complaint.edit',[
+            'complaint' => $complaint
+        ]);
     }
 
     /**
@@ -61,7 +64,24 @@ class ComplaintController extends Controller
      */
     public function update(UpdateComplaintRequest $request, Complaint $complaint)
     {
-        //
+       // dd($request->all());  //cara utk debug
+
+       //1.validate form data
+       $request->validate([
+        'title'=> ['required', 'min:6', 'max:100'],
+        'description'=>['required']
+       ]);
+
+       //2.update data
+       $complaint->update([
+        'title'=> $request->input('title'),
+        'description'=> $request->input('description')
+       ]);
+
+       //3.redirect user to another page
+       return back()->with('berjaya', 'Rekod telah dikemaskini.');
+       //return to_route('complaint.index')->with('berjaya', 'Rekod telah dikemaskini.');
+
     }
 
     /**

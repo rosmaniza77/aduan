@@ -82,6 +82,29 @@
         </nav>
 
         <main class="py-4">
+        @if($errors->isNotEmpty())
+            <div class="container">
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading">Error!</h4>
+                    <ol class="mb-0">
+                        @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ol>
+                </div>
+            </div>
+            @endif
+        
+            
+        @if(session('berjaya'))
+            <div class="container">
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Success!</h4>
+                    <p class="mb-0">{{ session('berjaya') }}</p>
+                </div>
+            </div>
+            @endif
+
             @yield('content')
         </main>
     </div>
